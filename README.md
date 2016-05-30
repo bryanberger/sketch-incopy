@@ -9,6 +9,8 @@ A simple Proof-of-Concept plugin for Sketch 3 that will let you collaborate with
 2. `npm start`
 3. Visit `http://localhost:8080`
 4. Refresh until the WebSocket handshake is successful
+5. Go back to Sketch and click the `Mirror` Icon
+6. Accept the connection from `Sketch inCopy`
 
 ## Todo
 1. Port to nw or electron
