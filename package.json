@@ -1,0 +1,21 @@
+{
+  "name": "sketch-incopy",
+  "version": "1.0.0",
+  "description": "A PoC version of inCopy for Sketch",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.15.1",
+    "coscript": "^1.0.0",
+    "express": "^4.13.4",
+    "mdns": "^2.3.3",
+    "node-uuid": "^1.4.7",
+    "pug": "^0.1.0",
+    "ws": "^1.1.0"
+  }
+}

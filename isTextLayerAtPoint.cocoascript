@@ -1,0 +1,99 @@
+var doc                 = context.document;
+var page                = doc.currentPage();
+var currentArtboard     = page.currentArtboard();
+var textLayers          = getAllTextLayers();
+
+/*
+* Main Call
+*/
+log(isTextLayerAtPoint(point));
+
+/*
+* Recursive MSTextLayer finder
+*/
+function isTextLayer(layer) {
+  var className = layer.className();
+
+  if (className == "MSTextLayer") {
+    return layer;
+  }
+
+  if (className == "MSArtboardGroup" || className == "MSLayerGroup") {
+    var sublayers = layer.layers;
+
+    for(var i = 0; i < sublayers.count; i++) {
+      var sublayer = sublayers.objectAtIndex(i);
+      isTextLayer(sublayer);
+    }
+  }
+}
+
+/*
+* Get All Text Layers and push them into an array
+*/
+function getAllTextLayers() {
+    var textLayers = [];
+    var layers = page.children();
+
+    // Loop through all children of the page
+    for (var i = 0; i < layers.count(); i++) {
+        // get the current layer
+        var layer = layers.objectAtIndex(i);
+
+        if(isTextLayer(layer)) {
+            textLayers.push(layer);
+        }
+    }
+
+    return textLayers;
+}
+
+/*
+* Get actual x,y coordinates, regardless of how nested the layer is
+*/
+function getUICoordinatesOfLayer(layer) {
+    if(currentArtboard) {
+        var f = layer.frame(),
+            x = layer.absoluteRect().x() - currentArtboard.frame().x(),
+            y = layer.absoluteRect().y() - currentArtboard.frame().y();
+
+        ui = {
+            x: x,
+            y: y,
+            width: f.width(),
+            height: f.height()
+        }
+
+        return ui;
+    }
+    return;    
+}
+
+/*
+* Loop through all text layers and determine if we clicked on one
+*/
+function isTextLayerAtPoint(pt) {
+    if(textLayers.length == 0) {
+        return false;
+    }
+    
+    for(var i = 0; i < textLayers.length; i++) {
+        var layer = textLayers[i];
+        var ui = getUICoordinatesOfLayer(layer);
+
+        var boundingRect = {
+            x1: ui.x,
+            y1: ui.y,
+            x2: ui.x + ui.width,
+            y2: ui.y + ui.height
+        }
+
+        if( (boundingRect.x1 < pt.x && pt.x < boundingRect.x2) &&
+            (boundingRect.y1 < pt.y && pt.y < boundingRect.y2) ) {
+            
+            return layer.objectID();
+        }
+    }
+
+    return false;
+}

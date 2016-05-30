@@ -1,0 +1,70 @@
+var doc                 = context.document;
+var page                = doc.currentPage();
+var currentArtboard     = page.currentArtboard();
+
+/*
+* Main Call
+*/
+log(updateTextLayer(objectID, txt));
+
+/*
+* Recursive MSTextLayer finder
+*/
+function isTextLayer(layer) {
+  var className = layer.className();
+
+  if (className == "MSTextLayer") {
+    return layer;
+  }
+
+  if (className == "MSArtboardGroup" || className == "MSLayerGroup") {
+    var sublayers = layer.layers;
+
+    for(var i = 0; i < sublayers.count; i++) {
+      var sublayer = sublayers.objectAtIndex(i);
+      isTextLayer(sublayer);
+    }
+  }
+}
+
+/*
+* Get Layer with ID, modification of getAllTextLayers()
+*/
+function getLayer(id) {
+    var layers = page.children();
+
+    // Loop through all children of the page
+    for (var i = 0; i < layers.count(); i++) {
+        // get the current layer
+        var layer = layers.objectAtIndex(i);
+
+        if(isTextLayer(layer)) {
+            if(layer.objectID() == id) {
+                return layer;
+            }
+        }
+    }
+
+    return null;
+}
+
+/*
+* Update TextLayer of id with txt
+*/
+function updateTextLayer(id, txt) {
+    var layer = getLayer(id);
+
+    log(layer.name());
+
+    if(layer != null) {
+        var layerName = layer.name();
+
+        layer.setStringValue(txt);
+        layer.setName(txt);
+        doc.showMessage( 'Replaced text in layer: "' + layerName + '" to "' + txt + '"' );
+        
+        return layer.objectID();
+    }
+    
+    return false;
+}

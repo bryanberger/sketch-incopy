@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    script.
+      var ip='#{sketchProps.ip}';
+      var port='#{sketchProps.port}';
+      var wsURL='#{sketchProps.wsURL}';
+      var uuid="#{uuid}";
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/css/styles.css', rel='stylesheet')
+    script(src='https://code.jquery.com/jquery-2.2.4.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    script(src='/js/client.js')
+  body
+    div#app
+        img
+        div.popover
+          form
+            input(class="txt" placeholder="Write replacement text..." autofocus)
+            button(class="btn btn-primary").
+              Update

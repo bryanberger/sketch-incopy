@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+.popover {
+    max-width: 300px;
+    padding: 10px;
+}
+
+.popover input {
+    margin-right: 20px;
+}
