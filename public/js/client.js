@@ -1,8 +1,10 @@
 $(function() {
     var ws = new WebSocket('ws://' + window.wsURL);
     var token = null;
+    var currentArtboardId = null;
     var pt = {};
     var $popover = $('.popover');
+    var pages = {};
 
     $('#app img').click(function(e) {
         if(token) {
@@ -58,6 +60,8 @@ $(function() {
     ws.onmessage = function(e) {
         var e = JSON.parse(e.data);
         var o = e.content;
+        var w = 0;
+        var h = 0;
 
         switch(e.type) {
             case 'connected':
@@ -65,13 +69,25 @@ $(function() {
             return;
 
             case 'manifest':
+                pages = o.contents.pages;
             return;
 
             case 'current-artboard':
             case 'artboard':
+                pages.forEach(function(page) {
+                    var artboards = page.artboards;
+                    
+                    artboards.forEach(function(artboard){
+                        if(artboard.id === o.identifier) {
+                            w = artboard.width;
+                            h = artboard.height;
+                        }
+                    });
+                });
+
                 if(o.path) {
                     var path = "http://" + window.ip + ":" + window.port + o.path +"?token=" + token + "&t=" + Date.now();
-                    $('#app img').attr('src', path);
+                    $('#app img').attr('src', path).css({width: w, height: h});
                 }
             return;
         }
