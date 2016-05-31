@@ -1,6 +1,7 @@
 'use strict'
 
 let fs = require('fs'),
+    os = require('os'),
     path = require('path'),
     spawn = require('child_process').spawn,
     coscript = require('coscript'),
@@ -32,7 +33,8 @@ if (!fs.existsSync(TMP_DIR)) {
 
 // listen for HTTP services on the local machine
 bonjour.on('serviceUp', function(service) {
-    if(service.name.indexOf('Sketch Mirror') > -1) {
+    if(service.name.indexOf('Sketch Mirror') > -1 &&
+        service.host.indexOf(os.hostname()) > -1) {
         // bonjour.stop();
         // hack, only use IPv4 ips for now. WebSocket doesn't like IPv6?
         service.addresses.some((ip) => {

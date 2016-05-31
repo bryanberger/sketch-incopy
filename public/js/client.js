@@ -88,7 +88,7 @@ $(function() {
 
         sendMessage({
             type: 'device-info',
-            challenge: '',
+            challenge: uuid,
             content: {
                 uuid: uuid,
                 'user-agent': window.navigator.userAgent,
