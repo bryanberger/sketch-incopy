@@ -33,8 +33,9 @@ if (!fs.existsSync(TMP_DIR)) {
 
 // listen for HTTP services on the local machine
 bonjour.on('serviceUp', function(service) {
+    var hostname = 'deca';//os.hostname();
     if(service.name.indexOf('Sketch Mirror') > -1 &&
-        service.host.indexOf(os.hostname()) > -1) {
+        service.host.indexOf(hostname) > -1) {
         // bonjour.stop();
         // hack, only use IPv4 ips for now. WebSocket doesn't like IPv6?
         service.addresses.some((ip) => {
@@ -57,7 +58,7 @@ let objectID = null;
 
 // Express server
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true})); 
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.use('/', express.static(__dirname + '/public'));
@@ -105,7 +106,7 @@ function waterfall(res) {
         } else {
             if(scriptToRun === script_isTextLayerAtPoint) {
                 objectID = data;
-            } 
+            }
             res.send(true);
         }
     });
