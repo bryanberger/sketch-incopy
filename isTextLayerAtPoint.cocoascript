@@ -66,7 +66,8 @@ function getUICoordinatesOfLayer(layer) {
 
         return ui;
     }
-    return;    
+    
+    return;
 }
 
 /*
@@ -76,7 +77,7 @@ function isTextLayerAtPoint(pt) {
     if(textLayers.length == 0) {
         return false;
     }
-    
+
     for(var i = 0; i < textLayers.length; i++) {
         var layer = textLayers[i];
         var ui = getUICoordinatesOfLayer(layer);
@@ -90,7 +91,7 @@ function isTextLayerAtPoint(pt) {
 
         if( (boundingRect.x1 < pt.x && pt.x < boundingRect.x2) &&
             (boundingRect.y1 < pt.y && pt.y < boundingRect.y2) ) {
-            
+
             return layer.objectID();
         }
     }
