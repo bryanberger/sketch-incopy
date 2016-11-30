@@ -1,5 +1,8 @@
 # Sketch inCopy Plugin (PoC)
-A simple Proof-of-Concept plugin for Sketch 3 that will let you collaborate with Copy Editors in realtime, similar to the inCopy/inDesign workflow.
+A simple Proof-of-Concept plugin for Sketch 3 that will let you collaborate with Copy Editors over the Web in realtime, similar to the inCopy/inDesign workflow.
+
+## Demo
+![Image of Sketch inCopy Plugin PoC Demo](media/demo.gif)
 
 ## Installation
 `npm install`
