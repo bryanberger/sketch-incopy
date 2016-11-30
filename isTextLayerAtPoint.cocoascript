@@ -66,7 +66,7 @@ function getUICoordinatesOfLayer(layer) {
 
         return ui;
     }
-    
+
     return;
 }
 
@@ -81,6 +81,10 @@ function isTextLayerAtPoint(pt) {
     for(var i = 0; i < textLayers.length; i++) {
         var layer = textLayers[i];
         var ui = getUICoordinatesOfLayer(layer);
+
+        if(typeof ui == 'undefined') {
+          return false;
+        }
 
         var boundingRect = {
             x1: ui.x,
