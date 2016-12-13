@@ -33,7 +33,7 @@ if (!fs.existsSync(TMP_DIR)) {
 
 // listen for HTTP services on the local machine
 bonjour.on('serviceUp', function(service) {
-    var hostname = 'deca';//os.hostname();
+    var hostname = os.hostname();
     if(service.name.indexOf('Sketch Mirror') > -1 &&
         service.host.indexOf(hostname) > -1) {
         // bonjour.stop();
