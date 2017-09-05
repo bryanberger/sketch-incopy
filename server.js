@@ -154,7 +154,7 @@ function runScript(file, callback) {
         }
 
         // clean-up tmp files
-        fs.unlink(file);
+        fs.unlink(file, function() {});
 
         // clean-up child_processes
         child.kill();
