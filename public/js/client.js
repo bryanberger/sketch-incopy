@@ -18,8 +18,8 @@ $(function() {
             // hide popover first before deciding to show it
             $popover.hide();
 
-            $.post('/isTextLayerAtPoint', { 
-                point: { 
+            $.post('/isTextLayerAtPoint', {
+                point: {
                     x: x,
                     y: y
                 }
@@ -42,13 +42,13 @@ $(function() {
         var txt = $('.txt').val();
 
         if(txt) {
-            $.post('/updateTextLayer', { 
+            $.post('/updateTextLayer', {
                 txt: txt
             }, function() {
                 $popover.hide();
                 $popover.find('.txt').focus().val('');
             });
-        }        
+        }
 
         return false;
     });
@@ -76,19 +76,17 @@ $(function() {
             case 'artboard':
                 pages.forEach(function(page) {
                     var artboards = page.artboards;
-                    
+
                     artboards.forEach(function(artboard){
                         if(artboard.id === o.identifier) {
                             w = artboard.width;
                             h = artboard.height;
+                            var path = "http://" + window.ip + ":" + window.port + "/artboards/" + artboard.id +"?scale=1&token=" + token + "&t=" + Date.now();
+                            $('#app img').attr('src', path).css({width: w, height: h});
                         }
                     });
                 });
 
-                if(o.path) {
-                    var path = "http://" + window.ip + ":" + window.port + o.path +"?token=" + token + "&t=" + Date.now();
-                    $('#app img').attr('src', path).css({width: w, height: h});
-                }
             return;
         }
     }
