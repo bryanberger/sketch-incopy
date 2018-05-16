@@ -31,12 +31,28 @@ if (!fs.existsSync(TMP_DIR)) {
   fs.mkdirSync(TMP_DIR);
 }
 
+// get local ips
+let ifaces = os.networkInterfaces()
+let interfaces = []
+Object.keys(ifaces).forEach(function (ifname) {
+
+  ifaces[ifname].forEach(function (iface) {
+    if (iface.internal !== false) {
+      // skip over internal (i.e. 127.0.0.1)
+      return
+    }
+
+    interfaces.push(iface.address)
+  })
+})
+
 // listen for HTTP services on the local machine
 bonjour.on('serviceUp', function(service) {
     var hostname = os.hostname();
+
+
     if(service.name.indexOf('Sketch Mirror') > -1 &&
-        service.host.indexOf(hostname) > -1) {
-        // bonjour.stop();
+      interfaces.some(r => service.addresses.includes(r)) ) {
         // hack, only use IPv4 ips for now. WebSocket doesn't like IPv6?
         service.addresses.some((ip) => {
             if (!ip.match(/[a-z]/i)) {
