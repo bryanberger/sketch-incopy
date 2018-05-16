@@ -50,7 +50,6 @@ Object.keys(ifaces).forEach(function (ifname) {
 bonjour.on('serviceUp', function(service) {
     var hostname = os.hostname();
 
-
     if(service.name.indexOf('Sketch Mirror') > -1 &&
       interfaces.some(r => service.addresses.includes(r)) ) {
         // hack, only use IPv4 ips for now. WebSocket doesn't like IPv6?
